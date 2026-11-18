@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CyberGuard | Security Management</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<div id="authView" class="auth-wrap">
+  <div class="auth-card">
+    <div class="brand-mark">⬡</div><p class="eyebrow">CYBERSECURITY MANAGEMENT</p>
+    <h1>CyberGuard</h1><p class="muted">Your security workspace</p>
+    <div class="tabs"><button class="tab active" data-tab="login">Login</button><button class="tab" data-tab="register">Create account</button></div>
+    <form id="loginForm">
+      <label>Username or email</label><input name="identity" required autocomplete="username">
+      <label>Password</label><input name="password" type="password" required autocomplete="current-password">
+      <button class="primary full">Sign in</button>
+    </form>
+    <form id="registerForm" class="hidden">
+      <label>Full name</label><input name="full_name" required>
+      <label>Username</label><input name="username" required>
+      <label>Email</label><input name="email" type="email" required>
+      <label>Password (minimum 8 characters)</label><input name="password" type="password" minlength="8" required>
+      <button class="primary full">Create account</button>
+    </form>
+    <p id="authMessage" class="message"></p>
+    <small class="muted">The first account registered becomes the administrator.</small>
+  </div>
+</div>
+<div id="appView" class="layout hidden">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark small">⬡</span><span>Cyber<span class="green">Guard</span></span></div>
+    <p class="side-label">WORKSPACE</p>
+    <button class="nav active" data-page="overview">▦ <span>Overview</span></button>
+    <button class="nav" data-page="password">◈ <span>Password analyzer</span></button>
+    <button class="nav" data-page="url">⌁ <span>Phishing URL check</span></button>
+    <button class="nav" data-page="network">⌘ <span>Network check</span></button>
+    <button class="nav" data-page="file">▤ <span>File fingerprint</span></button>
+    <button class="nav" data-page="generator">✳ <span>Password generator</span></button>
+    <button class="nav" data-page="awareness">◎ <span>Awareness quiz</span></button>
+    <button class="nav" data-page="history">◷ <span>Activity history</span></button>
+    <button class="nav" data-page="reports">▧ <span>Reports</span></button>
+    <button class="nav admin-only hidden" data-page="admin">♙ <span>User management</span></button>
+    <div class="sidebar-bottom"><div id="userLabel" class="muted"></div><button id="logoutBtn" class="logout">↪ Sign out</button></div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><div><p class="eyebrow">SECURITY CONSOLE</p><h2 id="pageTitle">Overview</h2></div><div class="status"><i></i> LOCAL INSTANCE</div></header>
+    <section id="page-overview" class="page">
+      <div class="welcome"><div><p class="eyebrow green">YOUR SECURITY WORKSPACE</p><h1>Stay aware. Stay secure.</h1><p class="muted">Run basic checks, learn safe practices and review your activity.</p></div><div class="shield">⬡</div></div>
+      <div class="stats"><div class="stat"><span>Recorded checks</span><strong id="statScans">—</strong><small>In your account</small></div><div class="stat"><span>Warnings</span><strong id="statWarnings">—</strong><small>Heuristic findings</small></div><div class="stat"><span>Available tools</span><strong>8</strong><small>Learning and checking</small></div></div>
+      <h3>Security tools</h3><div class="tool-grid">
+        <button class="tool" data-go="password"><b>◈</b><strong>Password analyzer</strong><span>Review password characteristics</span></button>
+        <button class="tool" data-go="url"><b>⌁</b><strong>Phishing URL check</strong><span>Look for suspicious URL patterns</span></button>
+        <button class="tool" data-go="network"><b>⌘</b><strong>Network check</strong><span>Check a local host on port 80</span></button>
+        <button class="tool" data-go="file"><b>▤</b><strong>File fingerprint</strong><span>Calculate a SHA-256 hash</span></button>
+        <button class="tool" data-go="generator"><b>✳</b><strong>Password generator</strong><span>Create a random strong password</span></button>
+        <button class="tool" data-go="awareness"><b>◎</b><strong>Awareness quiz</strong><span>Learn to spot common risks</span></button>
+      </div>
+      <div class="notice">These tools provide basic educational checks. They do not replace professional security testing, antivirus software or threat-intelligence services.</div>
+    </section>
+    <section id="page-password" class="page hidden"><div class="panel"><h3>Password strength analyzer</h3><p class="muted">Your password is checked in memory and is never saved or logged.</p><label>Password</label><input id="passwordInput" type="password" placeholder="Enter a password to evaluate"><button id="analyzeBtn" class="primary">Analyze password</button><div id="passwordResult" class="result"></div></div></section>
+    <section id="page-url" class="page hidden"><div class="panel"><h3>Phishing URL pattern check</h3><p class="muted">Checks visible URL patterns only; it does not query reputation databases.</p><label>Website URL</label><input id="urlInput" placeholder="https://example.com"><button id="urlBtn" class="primary">Check URL</button><div id="urlResult" class="result"></div></div></section>
+    <section id="page-network" class="page hidden"><div class="panel"><h3>Local network connectivity check</h3><p class="muted">Checks only TCP port 80 on localhost or a private/local network address. Only test systems you own or are authorized to assess.</p><label>Local host or private IP</label><input id="hostInput" placeholder="127.0.0.1"><button id="networkBtn" class="primary">Check connection</button><div id="networkResult" class="result"></div></div></section>
+    <section id="page-file" class="page hidden"><div class="panel"><h3>File SHA-256 fingerprint</h3><p class="muted">Calculates a fingerprint; it does not detect malware. File size limit: 20 MB.</p><label>Select file</label><input id="fileInput" type="file"><button id="fileBtn" class="primary">Calculate hash</button><div id="fileResult" class="result"></div></div></section>
+    <section id="page-generator" class="page hidden"><div class="panel"><h3>Strong password generator</h3><label>Length: <span id="lengthLabel">18</span></label><input id="lengthInput" type="range" min="12" max="64" value="18"><button id="generateBtn" class="primary">Generate password</button><div id="generated" class="generated"></div><button id="copyBtn" class="secondary">Copy password</button></div></section>
+    <section id="page-awareness" class="page hidden"><div class="panel"><h3>Cybersecurity awareness quiz</h3><div id="quizArea"><button id="loadQuiz" class="primary">Load quiz</button></div></div></section>
+    <section id="page-history" class="page hidden"><div class="panel"><h3>Recent activity</h3><div id="historyArea" class="table-wrap"></div></div></section>
+    <section id="page-reports" class="page hidden"><div class="panel"><h3>Security activity report</h3><p class="muted">Download a text report of your recorded checks.</p><a class="primary inline" href="/api/report">Download report</a></div></section>
+    <section id="page-admin" class="page hidden"><div class="panel"><h3>Registered users</h3><div id="usersArea" class="table-wrap"></div></div></section>
+    <p id="globalMessage" class="message"></p>
+  </main>
+</div>
+<script src="/static/js/app.js"></script>
+</body></html>
